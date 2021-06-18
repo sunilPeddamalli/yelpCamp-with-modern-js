@@ -18,7 +18,7 @@ const seed = async () => {
     for (let i = 0; i <= 50; i++) {
         const random = Math.trunc(Math.random() * 1000);
         const campground = new Campground({
-            location: `${Cities[random].city},${Cities[random].state}`,
+            location: `${Cities[random].city}, ${Cities[random].state}`,
             title: `${sample(descriptors)} ${sample(places)}`
         });
         await campground.save();
