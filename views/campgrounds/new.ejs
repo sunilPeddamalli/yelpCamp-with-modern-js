@@ -5,33 +5,34 @@
             New Campground
         </h1>
         <div class="col-6 offset-3">
-            <form action='/campgrounds' method="POST">
+            <form action='/campgrounds' method="POST" class='needs-validation' novalidate>
                 <div class='mb-3'>
                     <label class='form-label' for='title'>Title</label>
-                    <input class='form-control' type='text' id='title' name='campground[title]' placeholder="Add Title">
+                    <input class='form-control' type='text' id='title' name='campground[title]' placeholder="Add Title"
+                        required>
                 </div>
                 <div class='mb-3'>
                     <label class='form-label' for='location'>Location</label>
                     <input class='form-control' type='text' id='location' name='campground[location]'
-                        placeholder='Add location'>
+                        placeholder='Add location' required>
                 </div>
                 <div class="mb-3">
                     <label class='form-label' for='price'>Price</label>
                     <div class="input-group">
                         <span class="input-group-text" id="price">$</span>
                         <input type="text" class="form-control" placeholder="0.00" id='price' name='campground[price]'
-                            aria-label="price" aria-describedby="price">
+                            aria-label="price" aria-describedby="price" required>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class='form-label' for='image'>Image URL</label>
                     <input class='form-control' type='text' id='image' name='campground[image]'
-                        placeholder='Add Image URL'>
+                        placeholder='Add Image URL' required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name='campground[description]'
-                        placeholder="Add Description" rows="3"></textarea>
+                        placeholder="Add Description" rows="3" required></textarea>
                 </div>
 
                 <div class="mb-3">
@@ -39,6 +40,8 @@
                 </div>
 
             </form>
+
+
 
             <a href='/campgrounds'>Back</a>
         </div>

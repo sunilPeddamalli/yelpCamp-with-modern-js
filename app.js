@@ -6,7 +6,6 @@ const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 const ejsMate = require('ejs-mate');
 
-
 mongoose.connect('mongodb://localhost/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('connected to MongoDB');
@@ -24,7 +23,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.redirect('/campgrounds');
 })
 
 app.get('/campgrounds', async (req, res) => {
