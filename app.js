@@ -6,7 +6,8 @@ const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 const ejsMate = require('ejs-mate');
 const expressError = require('./utils/expressError');
-const catchError = require('./utils/catchError')
+const catchError = require('./utils/catchError');
+const { catchErrorSchema } = require('./schema');
 
 mongoose.connect('mongodb://localhost/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -24,6 +25,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
+const validateSchema = (req, res, next) => {
+    const { error } = catchErrorSchema.validate(req.body);
+    console.log(error);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new expressError(msg, 400)
+    } else {
+        next()
+    }
+};
 
 app.get('/', (req, res) => {
     res.redirect('/campgrounds');
@@ -38,7 +49,7 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('campgrounds/new');
 });
 
-app.post('/campgrounds', catchError(async (req, res) => {
+app.post('/campgrounds', validateSchema, catchError(async (req, res) => {
     const campground = await new Campground(req.body.campground);
     campground.save();
     res.redirect(`/campgrounds/${campground._id}`)
@@ -56,7 +67,7 @@ app.get('/campgrounds/:id/edit', catchError(async (req, res) => {
     res.render('campgrounds/edit', { campground });
 }));
 
-app.put('/campgrounds/:id', catchError(async (req, res) => {
+app.put('/campgrounds/:id', validateSchema, catchError(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, req.body.campground, { useFindAndModify: false });
     res.redirect(`/campgrounds/${campground._id}`);
