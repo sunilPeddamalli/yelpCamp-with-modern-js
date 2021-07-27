@@ -15,14 +15,8 @@
     <%- include('../partials/navbar') %>
 
         <main class='container mt-5'>
-            <% if(success && success.length){ %>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <%= success %>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <% } %>
-
-                    <%- body %>
+            <%- include('../partials/flash') %>
+                <%- body %>
         </main>
         <%- include('../partials/footer') %>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
