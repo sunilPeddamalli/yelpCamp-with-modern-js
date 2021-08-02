@@ -26,7 +26,7 @@ const sessionConfig = {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}
+};
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
