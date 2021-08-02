@@ -7,6 +7,7 @@ const ejsMate = require('ejs-mate');
 const expressError = require('./utils/expressError');
 const campgroundRoute = require('./routes/campground');
 const reviewRoute = require('./routes/review');
+const userRoute = require('./routes/users');
 const session = require('express-session');
 const flash = require('connect-flash');
 const User = require('./models/user');
@@ -58,6 +59,9 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.redirect('/campgrounds');
 });
+
+// User Routes
+app.use('/', userRoute);
 
 // Campground Routes
 app.use('/campgrounds', campgroundRoute);
