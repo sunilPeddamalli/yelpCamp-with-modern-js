@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const catchError = require('../utils/catchError');
 const passport = require('passport');
+const { isLoggedIn } = require('../middleware');
 
 router.get('/register', (req, res) => {
     res.render('users/register');
