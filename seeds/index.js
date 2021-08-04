@@ -19,6 +19,7 @@ const seed = async () => {
         const random = Math.trunc(Math.random() * 1000);
         const price = Math.trunc(Math.random() * 20) + 10;
         const campground = new Campground({
+            author: '61088bc92f59c11264ddb99f',
             location: `${Cities[random].city}, ${Cities[random].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             price: price,
