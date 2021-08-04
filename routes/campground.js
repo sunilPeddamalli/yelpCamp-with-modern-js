@@ -1,20 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const catchError = require('../utils/catchError');
-const { campgroundSchema } = require('../schema');
 const Campground = require('../models/campground');
-const expressError = require('../utils/expressError');
-const { isLoggedIn } = require('../middleware');
-
-const validateCampground = (req, res, next) => {
-    const { error } = campgroundSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new expressError(msg, 400)
-    } else {
-        next()
-    }
-};
+const { isLoggedIn, validateCampground, isAuthor } = require('../middleware');
 
 router.get('/', catchError(async (req, res) => {
     const campgrounds = await Campground.find({});
@@ -43,25 +31,39 @@ router.get('/:id', catchError(async (req, res) => {
     res.render('campgrounds/show', { campground });
 }));
 
-router.get('/:id/edit', isLoggedIn, catchError(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchError(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
     if (!campground) {
         req.flash('error', 'Campground not found');
         return res.redirect('/campgrounds');
     }
+    // if (!campground.author._id.equals(req.user._id)) {
+    //     req.flash('error', "You don't have premission")
+    //     return res.redirect(`/campgrounds/${campground._id}`)
+    // }
     res.render('campgrounds/edit', { campground });
 }));
 
-router.put('/:id', isLoggedIn, validateCampground, catchError(async (req, res) => {
+router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchError(async (req, res) => {
     const { id } = req.params;
+    // const campground = await Campground.findById(id);
+    // if (!campground.author._id.equals(req.user._id)) {
+    //     req.flash('error', "You don't have premission")
+    //     return res.redirect(`/campgrounds/${campground._id}`)
+    // }
     const campground = await Campground.findByIdAndUpdate(id, req.body.campground, { useFindAndModify: false });
     req.flash('success', 'Successfully updated campground')
     res.redirect(`/campgrounds/${campground._id}`);
 }));
 
-router.delete('/:id', isLoggedIn, catchError(async (req, res) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchError(async (req, res) => {
     const { id } = req.params;
+    // const campground = await Campground.findById(id);
+    // if (!campground.author._id.equals(req.user._id)) {
+    //     req.flash('error', "You don't have premission")
+    //     return res.redirect(`/campgrounds/${campground._id}`)
+    // }
     await Campground.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted campground')
     res.redirect('/campgrounds');
