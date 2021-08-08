@@ -3,7 +3,8 @@ const router = express.Router({ mergeParams: true });
 const catchError = require('../utils/catchError');
 const Review = require('../models/review');
 const Campground = require('../models/campground');
-const { validateReview, isLoggedIn } = require('../middleware');
+const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware');
+
 
 
 router.post('/', isLoggedIn, validateReview, catchError(async (req, res) => {
@@ -18,7 +19,14 @@ router.post('/', isLoggedIn, validateReview, catchError(async (req, res) => {
     res.redirect(`/campgrounds/${id}`)
 }));
 
-router.delete('/:reviewId', catchError(async (req, res) => {
+// for isReviewAuthor middleware as once user logins the login post method redirects to a get route
+router.get('/:reviewId', isLoggedIn, isReviewAuthor, catchError(async (req, res) => {
+    const { id } = req.params;
+    res.redirect(`/campgrounds/${id}`);
+}));
+
+
+router.delete('/:reviewId', isLoggedIn, isReviewAuthor, catchError(async (req, res) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }, { useFindAndModify: false })
     await Review.findByIdAndDelete(reviewId);
