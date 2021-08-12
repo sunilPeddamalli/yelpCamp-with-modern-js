@@ -4,13 +4,13 @@ const catchError = require('../utils/catchError');
 const passport = require('passport');
 const users = require('../controllers/users');
 
-router.get('/register', users.renderRegisterForm);
+router.route('/register')
+    .get(users.renderRegisterForm)
+    .post(catchError(users.registerUser));
 
-router.post('/register', catchError(users.registerUser));
-
-router.get('/login', users.renderLoginForm);
-
-router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginUser);
+router.route('/login')
+    .get(users.renderLoginForm)
+    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginUser);
 
 router.get('/logout', users.logoutUser)
 

@@ -4,18 +4,17 @@ const catchError = require('../utils/catchError');
 const { isLoggedIn, validateCampground, isAuthor } = require('../middleware');
 const campgrounds = require('../controllers/campgrounds');
 
-router.get('/', catchError(campgrounds.index));
+router.route('/')
+    .get(catchError(campgrounds.index))
+    .post(isLoggedIn, validateCampground, catchError(campgrounds.createCampground))
 
 router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
-router.post('/', isLoggedIn, validateCampground, catchError(campgrounds.createCampground));
-
-router.get('/:id', catchError(campgrounds.showCampground));
+router.route('/:id')
+    .get(catchError(campgrounds.showCampground))
+    .put(isLoggedIn, isAuthor, validateCampground, catchError(campgrounds.updateCampground))
+    .delete(isLoggedIn, isAuthor, catchError(campgrounds.deleteCampground));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchError(campgrounds.renderEditForm));
-
-router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchError(campgrounds.updateCampground));
-
-router.delete('/:id', isLoggedIn, isAuthor, catchError(campgrounds.deleteCampground));
 
 module.exports = router;
