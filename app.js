@@ -18,7 +18,7 @@ const User = require('./models/user');
 const passport = require('passport');
 const localStrategy = require('passport-local')
 
-console.log('hey');
+console.log('heyyy');
 
 
 mongoose.connect('mongodb://localhost/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true })
