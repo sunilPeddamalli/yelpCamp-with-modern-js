@@ -23,8 +23,22 @@ const seed = async () => {
             location: `${Cities[random].city}, ${Cities[random].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             price: price,
-            image: 'https://source.unsplash.com/collection/190727/1600x900',
-            description: 'This is the description of the above campground'
+            description: 'This is the description of the above campground',
+            images: [
+                {
+                    url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+                    filename: 'YelpCamp/xijxv6ofwowaynpzymug'
+                },
+                {
+                    url: 'https://images.unsplash.com/photo-1528892677828-8862216f3665?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2FtcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+                    filename: 'YelpCamp/yeiukidpnw3f62mf7tde'
+                },
+                {
+                    url: 'https://images.unsplash.com/photo-1599758376048-8c340c1489cb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGNhbXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+                    filename: 'YelpCamp/cflmomxtv9nal11kz2ok'
+                }
+            ]
+
         });
         await campground.save();
     }
