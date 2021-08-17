@@ -19,7 +19,7 @@ router.get('/new', isLoggedIn, campgrounds.renderNewForm);
 
 router.route('/:id')
     .get(catchError(campgrounds.showCampground))
-    .put(isLoggedIn, isAuthor, validateCampground, catchError(campgrounds.updateCampground))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateCampground, catchError(campgrounds.updateCampground))
     .delete(isLoggedIn, isAuthor, catchError(campgrounds.deleteCampground));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchError(campgrounds.renderEditForm));
