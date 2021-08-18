@@ -2,13 +2,19 @@ const { string } = require('joi');
 const mongoose = require('mongoose');
 const Review = require('./review');
 
+const ImagesSchema = new mongoose.Schema({
+    url: String,
+    filename: String
+})
+
+ImagesSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_200')
+});
+
 const campgroundSchema = new mongoose.Schema({
     title: String,
     price: Number,
-    images: [{
-        url: String,
-        filename: String
-    }],
+    images: [ImagesSchema],
     description: String,
     location: String,
     author: {

@@ -57,7 +57,6 @@ module.exports.updateCampground = async (req, res) => {
     //     req.flash('error', "You don't have premission")
     //     return res.redirect(`/campgrounds/${campground._id}`)
     // }
-    console.log(req.body)
     const campground = await Campground.findByIdAndUpdate(id, req.body.campground, { useFindAndModify: false });
     const imgs = req.files.map(f => {
         return { url: f.path, filename: f.filename }
