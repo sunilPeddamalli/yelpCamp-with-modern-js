@@ -3,6 +3,7 @@
 
     <div class="row">
         <div class="col-6">
+            <div id='map' style='width: 400px; height: 300px;'></div>
             <div class="card mb-3">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"
                     data-bs-interval="false">
@@ -123,3 +124,8 @@
                             <% } %>
         </div>
     </div>
+
+    <script>
+        const mapBoxToken = '<%-process.env.MAPBOX_TOKEN%>';
+    </script>
+    <script src='/javascript/showPageMap.js'></script>

@@ -14,6 +14,17 @@ ImagesSchema.virtual('thumbnail').get(function () {
 const campgroundSchema = new mongoose.Schema({
     title: String,
     price: Number,
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     images: [ImagesSchema],
     description: String,
     location: String,
