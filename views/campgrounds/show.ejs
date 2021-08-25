@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-6">
-            <div id='map' style='width: 400px; height: 300px;'></div>
+
             <div class="card mb-3">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"
                     data-bs-interval="false">
@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-6">
-
+            <div class="card mb-3" id='map' style='width: 639px; height: 300px;'></div>
             <% if(currentUser) {%>
                 <h2>Leave a review</h2>
                 <form action='/campgrounds/<%= campground._id %>/reviews' method="POST" class='needs-validation'
