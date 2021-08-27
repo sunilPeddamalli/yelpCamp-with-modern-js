@@ -23,7 +23,7 @@ const seed = async () => {
             location: `${Cities[random].city}, ${Cities[random].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             price: price,
-            geometry: { type: 'Point', coordinates: [ 72.82, 18.91 ] },
+            geometry: { type: 'Point', coordinates: [ Cities[random].longitude, Cities[random].latitude] },
             description: 'This is the description of the above campground',
             images: [
                 {
