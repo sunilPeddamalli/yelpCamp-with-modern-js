@@ -1,11 +1,15 @@
 mapboxgl.accessToken = mapBoxToken;
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/dark-v10',
+style: 'mapbox://styles/mapbox/light-v10',
 center: [-103.5917, 40.6699],
 zoom: 3
 });
- 
+
+// for(let camp of campgrounds.features){
+//     camp.properties = {popup: camp.title, campId: camp._id}
+// }
+
 map.on('load', () => {
 // Add a new source from our GeoJSON data and
 // set the 'cluster' option to true. GL-JS will
@@ -35,18 +39,18 @@ paint: {
 'step',
 ['get', 'point_count'],
 '#51bbd6',
-100,
+10,
 '#f1f075',
-750,
+30,
 '#f28cb1'
 ],
 'circle-radius': [
 'step',
 ['get', 'point_count'],
 20,
-100,
+10,
 30,
-750,
+30,
 40
 ]
 }
@@ -71,9 +75,9 @@ source: 'campgrounds',
 filter: ['!', ['has', 'point_count']],
 paint: {
 'circle-color': '#11b4da',
-'circle-radius': 4,
+'circle-radius': 6,
 'circle-stroke-width': 1,
-'circle-stroke-color': '#fff'
+'circle-stroke-color': '#2ef26a'
 }
 });
  
@@ -100,12 +104,15 @@ zoom: zoom
 // the unclustered-point layer, open a popup at
 // the location of the feature, with
 // description HTML from its properties.
+
+
 map.on('click', 'unclustered-point', (e) => {
 const coordinates = e.features[0].geometry.coordinates.slice();
-const mag = e.features[0].properties.mag;
-const tsunami =
-e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
- 
+// const popup = e.features[0].properties.popUp;
+// const id = e.features[0].properties.campId;
+
+const {popup} = e.features[0].properties;
+
 // Ensure that if the map is zoomed out such that
 // multiple copies of the feature are visible, the
 // popup appears over the copy being pointed to.
@@ -115,11 +122,10 @@ coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
  
 new mapboxgl.Popup()
 .setLngLat(coordinates)
-.setHTML(
-`magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`
-)
+// .setHTML(`<a href=/campgrounds/${id}>${popup}</a>`)
+.setHTML(popup)
 .addTo(map);
-});
+}); 
  
 map.on('mouseenter', 'clusters', () => {
 map.getCanvas().style.cursor = 'pointer';
