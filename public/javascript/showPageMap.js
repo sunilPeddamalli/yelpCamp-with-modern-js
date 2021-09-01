@@ -11,7 +11,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 
 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-    `<h4>${campground.title}</h4><p>${campground.location}</p>`
+    `<br><h5>${campground.title}</h5><p>${campground.location}</p>`
     );
 
 new mapboxgl.Marker({ color: 'red',classname:"apple-popup"})

@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 
 // Home Route
 app.get('/', (req, res) => {
-    res.redirect('/campgrounds');
+    res.render('home.ejs');
 });
 
 // User Routes

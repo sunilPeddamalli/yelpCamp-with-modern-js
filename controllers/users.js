@@ -26,7 +26,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.loginUser = (req, res) => {
     req.flash('success', 'Welcome back');
-    const redirectUrl = req.session.returnTo || '/campgrounds';
+    const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 };
@@ -34,5 +34,5 @@ module.exports.loginUser = (req, res) => {
 module.exports.logoutUser = (req, res) => {
     req.logout();
     req.flash('success', "Logged you out!");
-    res.redirect('/campgrounds');
+    res.redirect('/');
 };
