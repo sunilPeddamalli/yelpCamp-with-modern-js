@@ -1,6 +1,6 @@
 mapboxgl.accessToken = mapBoxToken;
 const map = new mapboxgl.Map({
-container: 'map',
+container: 'cluster-map',
 style: 'mapbox://styles/mapbox/light-v10',
 center: [-103.5917, 40.6699],
 zoom: 3
@@ -9,6 +9,8 @@ zoom: 3
 // for(let camp of campgrounds.features){
 //     camp.properties = {popup: camp.title, campId: camp._id}
 // }
+
+map.addControl(new mapboxgl.NavigationControl());
 
 map.on('load', () => {
 // Add a new source from our GeoJSON data and
