@@ -43,7 +43,6 @@
                         $<%= campground.price %>/night
                     </li>
                 </ul>
-                <%= /*console.log(String(campground.author._id)===String(currentUser._id)) */%>
                     <% if(currentUser && campground.author._id.equals(currentUser._id)) { %>
                         <div class="card-body">
                             <a href='/campgrounds/<%=campground._id%>/edit' class="card-link btn btn-info">Edit</a>
