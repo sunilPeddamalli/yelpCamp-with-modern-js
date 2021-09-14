@@ -16,7 +16,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const User = require('./models/user');
 const passport = require('passport');
-const localStrategy = require('passport-local')
+const localStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
 
 mongoose.connect('mongodb://localhost/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -46,6 +47,11 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '/public')))
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(
+    mongoSanitize({
+      replaceWith: '_',
+    }),
+  );
 
 app.use(passport.initialize());
 app.use(passport.session());
