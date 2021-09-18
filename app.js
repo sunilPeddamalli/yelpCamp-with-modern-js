@@ -19,6 +19,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require("helmet");
+// const dbUrl = process.env.DB_URL;
+// local - 'mongodb://localhost/yelpcamp'
 
 mongoose.connect('mongodb://localhost/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
