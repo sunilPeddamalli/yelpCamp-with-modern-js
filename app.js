@@ -21,7 +21,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require("helmet");
 const MongoStore = require('connect-mongo');
 
-const dbUrl = 'mongodb://localhost/yelpcamp'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost/yelpcamp';
 // cloud - process.env.DB_URL;
 // local - 'mongodb://localhost/yelpcamp'
 
@@ -33,11 +33,15 @@ mongoose.connect(dbUrl, { useNewUrlParser: true,useUnifiedTopology: true })
         console.log(err);
     });
 
+const secret = process.env.SECRET || 'thisisasecret'
+// cloud - process.env.SECRET;
+// local - 'thisisasecret'
+    
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisisasecret'
+        secret,
     }
 });
 
@@ -48,7 +52,7 @@ store.on('error',function(e){
 const sessionConfig = {
     store,
     name: 'session',
-    secret: 'thisisasecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
