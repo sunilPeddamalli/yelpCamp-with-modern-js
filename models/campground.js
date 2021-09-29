@@ -11,6 +11,10 @@ ImagesSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_200,h_150')
 });
 
+ImagesSchema.virtual('showUrl').get(function () {
+    return this.url.replace('/upload', '/upload/w_300,h_200')
+});
+
 const opts = { toJSON: { virtuals: true } };
 const campgroundSchema = new mongoose.Schema({
     title: String,
